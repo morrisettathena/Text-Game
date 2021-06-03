@@ -1,0 +1,73 @@
+{% extends "Engine/layout.html" %}
+
+{% block body %}
+
+<div style="text-align:center">
+<h1 style="text-align:center;display:inline-block;margin-right:20px"
+ id="gamename">{{ game.name }}</h1>
+
+{% if userlikes == True %} 
+<button style="display:inline-block" id = "likebutton" data-likestat="Unlike?">Unlike?</button>
+{% else %}
+<button style="display:inline-block" id = "likebutton" data-likestat="Like?">Like?</button>
+{% endif %}
+<div style = "display:block" id="likecount">Liked by: {{ likes }}</div>
+</div>
+
+<div id="windowView">
+    <div class="row" style="height:100%">
+        <div class = "column" style="height:90%;overflow:auto;border:1px solid #000000;margin:10px">
+            <div id="gameView">
+                <h3><b>Description:</b></h3>
+                {{ game.descript }}
+                <form action="{% url 'game' game.name %}" method="post">
+                    {% csrf_token %}
+
+                <textarea style="margin-top:20px;font-size:16px;width:100%;height:80px" 
+                type="text", name= "newPostInput", 
+                id = "newPostInput", placeholder="Type here!"></textarea>
+                <button type="submit" id="submitPost">Ready to post?</button>
+                <div>
+                    <ul style="margin-top:20px">
+                        {% for comment in comments %}
+                        <li style="font-size:16px">
+                            <div style="text-align:left;margin-bottom:5px">
+                            <b> {{ comment.user.username }}:</b> {{ comment.content }}</div>
+                        </li>
+                        {% endfor %}
+                    </ul>
+                </div>
+                </form>
+            </div>
+        </div>
+        <div class = "column" style="height:100%">
+            <div id ="optionView" style="height:50%">
+                <h2 style="text-align:center" id="optionHeader">
+                    Menu
+                </h2>
+                <div id="optionlist">
+                    <button class = "Button1" id="NewGameButton" 
+                    style="background-color:lightblue">New Game</button>
+
+                    {% if current_data %}
+                    <button class = "Button1" id="ContinueGameButton" 
+                    style="background-color:palevioletred">Continue Game</button>
+                    {% else %}
+                    <button class = "Button1" id="ContinueGameButton" 
+                    style="background-color:palevioletred" disabled>Continue Game</button>
+                    {% endif %}
+                </div>
+            </div>
+            <div id = "actionView" style="height:50%">
+                <h2 id = "actionHeader" style="text-align:center"></h2>
+                <div id="actionlist">
+
+                </div>
+            </div>
+        </div> 
+
+    </div>
+</div>
+
+
+{% endblock %}

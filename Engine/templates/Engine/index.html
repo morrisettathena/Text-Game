@@ -1,0 +1,15 @@
+{% extends "Engine/layout.html" %}
+
+{% block body %}
+<h1 style="text-align:center">Home</h1>
+
+
+<div style="margin-top:50px;margin-left:50px;">
+{% for game in games %}
+<h2><a href="{% url 'game' game.name %}">{{ game.name }}</a></h2>
+<div style="padding-bottom:25px">{{ game.descript }}</div>
+{% endfor %}
+</div>
+
+
+{% endblock %}
